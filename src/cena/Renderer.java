@@ -7,7 +7,7 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.FPSAnimator;
 /**
- *
+ *aaasaaa
  * @author Kakugawa
  */
 public class Renderer {

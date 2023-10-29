@@ -20,6 +20,8 @@ public class Cena implements GLEventListener{
 
     public float xBastao;
 
+    public int variavelX;
+
     public float ang;
     public int op;
     
@@ -43,8 +45,31 @@ public class Cena implements GLEventListener{
     public float yBola;
 
     public float yBastao;
+
+    public float bastaoParte1;
+    public float bastaoParte2;
+    public float bastaoParte3;
+
+    public float bastaoParte4;
+
+    public float bastaoParte5;
+
+    public float bastaoParte6;
+
+    public float ladoEsquerdoBastao;
+    public float ladoDireitoBastao;
+
+    public float alturaBastao;
     public int rings;
-    
+
+    public int variavelY;
+
+    public int teto;
+
+    public int paredeDireita;
+    public int paredeEsquerda;
+
+
     //Preenchimento
     public int mode;  
     
@@ -64,6 +89,10 @@ public class Cena implements GLEventListener{
     }
     
     public void reset(){
+        teto = 95;
+        paredeDireita = 95;
+        paredeEsquerda = -95 ;
+
         ang = 0;        
         
         //dados do cubo
@@ -92,6 +121,20 @@ public class Cena implements GLEventListener{
         yBastao = -80f;
 
         xBola = 0f;
+
+        ladoEsquerdoBastao = xBastao - 27f;
+        ladoDireitoBastao = xBastao + 27f;
+        alturaBastao = -65f;
+
+
+
+
+        variavelY = 1;
+        variavelX = 0;
+
+
+
+
 
 
     }
@@ -122,6 +165,15 @@ public class Cena implements GLEventListener{
         gl.glScalef(2,1,1);
         glut.glutSolidCube(size);
         gl.glPopMatrix();
+        ladoEsquerdoBastao = xBastao - 27f;
+        ladoDireitoBastao = xBastao + 27f;
+
+        bastaoParte1 = ladoEsquerdoBastao;
+        bastaoParte2 = bastaoParte1 + 11;
+        bastaoParte3 = bastaoParte2 + 11 ;
+        bastaoParte4 = bastaoParte3 + 11 ;
+        bastaoParte5 = bastaoParte4 + 11 ;
+        bastaoParte6 = bastaoParte5 + 11 ;
 
         //Bola
         gl.glColor3f(0,0,0); //cor do objeto
@@ -139,9 +191,47 @@ public class Cena implements GLEventListener{
         System.out.println("op = " + op);
 
         String m = mode == GL2.GL_LINE ? "LINE" : "FILL";
-        
-        desenhaTexto(gl, 20, 580, Color.BLACK ,"Modo: " + m);
-        
+
+
+        yBola = yBola - variavelY;
+        xBola = xBola + variavelX;
+
+
+
+        if(( ladoEsquerdoBastao < xBola && ladoDireitoBastao > xBola) && (alturaBastao == yBola) ) {
+            variavelY = variavelY * -1;
+
+            if(xBola > bastaoParte5 && xBola < bastaoParte6 ) {
+                variavelX = 3;
+            }
+            if(xBola > bastaoParte4 && xBola < bastaoParte5 ) {
+                variavelX = 1;
+            }
+            if(xBola > bastaoParte3 && xBola < bastaoParte4) {
+                variavelX = 0;
+            }
+            if(xBola > bastaoParte2 && xBola < bastaoParte3) {
+                variavelX = -1;
+            }
+            if(xBola > bastaoParte1 && xBola < bastaoParte2) {
+                variavelX = -3;
+            }
+
+        }
+
+        if(yBola > teto ){
+            variavelY = variavelY * -1;
+        }
+        if(xBola > paredeDireita){
+            variavelX = -1;
+        }
+
+        if(xBola <= paredeEsquerda){
+            variavelX = 1;
+        }
+
+
+            desenhaTexto(gl, 20, 580, Color.BLACK ,"Modo: " + m);
         switch(op){            
             case 1:
                 gl.glColor3f(0,0,0.8f); //cor do objeto
